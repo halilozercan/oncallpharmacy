@@ -2,8 +2,7 @@ package com.halilibo.shared.di
 
 import co.touchlab.kermit.Kermit
 import com.halilibo.shared.remote.PharmacyApi
-import com.halilibo.shared.repository.PharmacyRepository
-import com.halilibo.shared.repository.getLogger
+import com.halilibo.shared.repository.*
 import io.ktor.client.*
 import io.ktor.client.features.json.*
 import io.ktor.client.features.json.serializer.*
@@ -24,8 +23,11 @@ fun initKoin() = initKoin(enableNetworkLogs = false) {}
 
 fun commonModule(enableNetworkLogs: Boolean) = module {
     single { createJson() }
+    single { createDb() }
     single { createHttpClient(get(), enableNetworkLogs = enableNetworkLogs) }
     single { PharmacyRepository() }
+    single { PharmacyMapsRepository() }
+    single { SettingsRepository() }
     single { PharmacyApi(get()) }
     single { Kermit(getLogger()) }
 }

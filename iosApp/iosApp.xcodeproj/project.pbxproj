@@ -3,13 +3,25 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		160C788325AB11960071347C /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 160C788225AB11960071347C /* Util.swift */; };
+		1646E4CF258FCEB9009559E3 /* GridCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1646E4CC258FCEB9009559E3 /* GridCalculator.swift */; };
+		1646E4D0258FCEB9009559E3 /* GridStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1646E4CD258FCEB9009559E3 /* GridStack.swift */; };
+		1646E4D1258FCEB9009559E3 /* Array+chunked.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1646E4CE258FCEB9009559E3 /* Array+chunked.swift */; };
+		1646E4D7258FD117009559E3 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1646E4D6258FD117009559E3 /* Color.swift */; };
+		1646E4DF258FD572009559E3 /* Images.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1646E4DE258FD572009559E3 /* Images.swift */; };
+		1646E4E4258FF504009559E3 /* PharmacyDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1646E4E3258FF504009559E3 /* PharmacyDetail.swift */; };
+		164CA1E9258F7F7300668D99 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164CA1E8258F7F7300668D99 /* DashboardView.swift */; };
+		164CA1EF258F7FA800668D99 /* DashboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164CA1EE258F7FA800668D99 /* DashboardViewModel.swift */; };
+		164CA1F4258F809900668D99 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164CA1F3258F809900668D99 /* MainView.swift */; };
+		164CA1FD258F83B300668D99 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164CA1FC258F83B300668D99 /* MapView.swift */; };
+		166193B725AB6FEB004BEE79 /* CLLocationCoordinate2D+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166193B625AB6FEB004BEE79 /* CLLocationCoordinate2D+Equatable.swift */; };
+		16C6129D25B32A86001C0244 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 16C6129C25B32A86001C0244 /* ComposableArchitecture */; };
 		7555FF7F242A565900829871 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF7E242A565900829871 /* AppDelegate.swift */; };
 		7555FF81242A565900829871 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF80242A565900829871 /* SceneDelegate.swift */; };
-		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 		7555FF85242A565B00829871 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7555FF84242A565B00829871 /* Assets.xcassets */; };
 		7555FF88242A565B00829871 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7555FF87242A565B00829871 /* Preview Assets.xcassets */; };
 		7555FF8B242A565B00829871 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7555FF89242A565B00829871 /* LaunchScreen.storyboard */; };
@@ -51,10 +63,21 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		160C788225AB11960071347C /* Util.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		1646E4CC258FCEB9009559E3 /* GridCalculator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridCalculator.swift; sourceTree = "<group>"; };
+		1646E4CD258FCEB9009559E3 /* GridStack.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridStack.swift; sourceTree = "<group>"; };
+		1646E4CE258FCEB9009559E3 /* Array+chunked.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+chunked.swift"; sourceTree = "<group>"; };
+		1646E4D6258FD117009559E3 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		1646E4DE258FD572009559E3 /* Images.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Images.swift; sourceTree = "<group>"; };
+		1646E4E3258FF504009559E3 /* PharmacyDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PharmacyDetail.swift; sourceTree = "<group>"; };
+		164CA1E8258F7F7300668D99 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		164CA1EE258F7FA800668D99 /* DashboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardViewModel.swift; sourceTree = "<group>"; };
+		164CA1F3258F809900668D99 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		164CA1FC258F83B300668D99 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		166193B625AB6FEB004BEE79 /* CLLocationCoordinate2D+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CLLocationCoordinate2D+Equatable.swift"; sourceTree = "<group>"; };
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF7E242A565900829871 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7555FF80242A565900829871 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF84242A565B00829871 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7555FF87242A565B00829871 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7555FF8A242A565B00829871 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -74,6 +97,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7555FFB2242A642300829871 /* shared.framework in Frameworks */,
+				16C6129D25B32A86001C0244 /* ComposableArchitecture in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,6 +118,86 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1646E4BF258FCCE9009559E3 /* SourcesView */ = {
+			isa = PBXGroup;
+			children = (
+				1646E4CB258FCEA1009559E3 /* GridView */,
+			);
+			path = SourcesView;
+			sourceTree = "<group>";
+		};
+		1646E4CB258FCEA1009559E3 /* GridView */ = {
+			isa = PBXGroup;
+			children = (
+				1646E4CE258FCEB9009559E3 /* Array+chunked.swift */,
+				1646E4CC258FCEB9009559E3 /* GridCalculator.swift */,
+				1646E4CD258FCEB9009559E3 /* GridStack.swift */,
+			);
+			path = GridView;
+			sourceTree = "<group>";
+		};
+		1646E4D4258FD101009559E3 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1646E4D6258FD117009559E3 /* Color.swift */,
+				1646E4DE258FD572009559E3 /* Images.swift */,
+				166193B625AB6FEB004BEE79 /* CLLocationCoordinate2D+Equatable.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		1646E4E2258FF4E6009559E3 /* PharmacyDetail */ = {
+			isa = PBXGroup;
+			children = (
+				1646E4E3258FF504009559E3 /* PharmacyDetail.swift */,
+			);
+			path = PharmacyDetail;
+			sourceTree = "<group>";
+		};
+		164CA1E6258F7EDD00668D99 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				164CA1FB258F839F00668D99 /* MapView */,
+				164CA1F2258F808D00668D99 /* Tab */,
+				164CA1E7258F7EE600668D99 /* Dashboard */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		164CA1E7258F7EE600668D99 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				1646E4E2258FF4E6009559E3 /* PharmacyDetail */,
+				164CA1EE258F7FA800668D99 /* DashboardViewModel.swift */,
+				164CA1E8258F7F7300668D99 /* DashboardView.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		164CA1F2258F808D00668D99 /* Tab */ = {
+			isa = PBXGroup;
+			children = (
+				164CA1F3258F809900668D99 /* MainView.swift */,
+			);
+			path = Tab;
+			sourceTree = "<group>";
+		};
+		164CA1FB258F839F00668D99 /* MapView */ = {
+			isa = PBXGroup;
+			children = (
+				164CA1FC258F83B300668D99 /* MapView.swift */,
+			);
+			path = MapView;
+			sourceTree = "<group>";
+		};
+		16FDF71925932D6700E3AD2C /* State */ = {
+			isa = PBXGroup;
+			children = (
+				160C788225AB11960071347C /* Util.swift */,
+			);
+			path = State;
+			sourceTree = "<group>";
+		};
 		7555FF72242A565900829871 = {
 			isa = PBXGroup;
 			children = (
@@ -118,9 +222,12 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				16FDF71925932D6700E3AD2C /* State */,
+				1646E4D4258FD101009559E3 /* Extensions */,
+				1646E4BF258FCCE9009559E3 /* SourcesView */,
+				164CA1E6258F7EDD00668D99 /* Scenes */,
 				7555FF7E242A565900829871 /* AppDelegate.swift */,
 				7555FF80242A565900829871 /* SceneDelegate.swift */,
-				7555FF82242A565900829871 /* ContentView.swift */,
 				7555FF84242A565B00829871 /* Assets.xcassets */,
 				7555FF89242A565B00829871 /* LaunchScreen.storyboard */,
 				7555FF8C242A565B00829871 /* Info.plist */,
@@ -181,6 +288,9 @@
 			dependencies = (
 			);
 			name = iosApp;
+			packageProductDependencies = (
+				16C6129C25B32A86001C0244 /* ComposableArchitecture */,
+			);
 			productName = iosApp;
 			productReference = 7555FF7B242A565900829871 /* iosApp.app */;
 			productType = "com.apple.product-type.application";
@@ -227,8 +337,8 @@
 		7555FF73242A565900829871 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1130;
-				LastUpgradeCheck = 1130;
+				LastSwiftUpdateCheck = 1210;
+				LastUpgradeCheck = 1210;
 				ORGANIZATIONNAME = orgName;
 				TargetAttributes = {
 					7555FF7A242A565900829871 = {
@@ -253,6 +363,9 @@
 				Base,
 			);
 			mainGroup = 7555FF72242A565900829871;
+			packageReferences = (
+				16C6129B25B32A86001C0244 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */,
+			);
 			productRefGroup = 7555FF7C242A565900829871 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -316,9 +429,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				164CA1FD258F83B300668D99 /* MapView.swift in Sources */,
+				1646E4DF258FD572009559E3 /* Images.swift in Sources */,
+				1646E4E4258FF504009559E3 /* PharmacyDetail.swift in Sources */,
 				7555FF7F242A565900829871 /* AppDelegate.swift in Sources */,
+				1646E4D0258FCEB9009559E3 /* GridStack.swift in Sources */,
+				164CA1EF258F7FA800668D99 /* DashboardViewModel.swift in Sources */,
+				1646E4D1258FCEB9009559E3 /* Array+chunked.swift in Sources */,
+				164CA1E9258F7F7300668D99 /* DashboardView.swift in Sources */,
 				7555FF81242A565900829871 /* SceneDelegate.swift in Sources */,
-				7555FF83242A565900829871 /* ContentView.swift in Sources */,
+				1646E4D7258FD117009559E3 /* Color.swift in Sources */,
+				160C788325AB11960071347C /* Util.swift in Sources */,
+				164CA1F4258F809900668D99 /* MainView.swift in Sources */,
+				166193B725AB6FEB004BEE79 /* CLLocationCoordinate2D+Equatable.swift in Sources */,
+				1646E4CF258FCEB9009559E3 /* GridCalculator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -391,6 +515,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -451,6 +576,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -482,17 +608,20 @@
 		7555FFA6242A565B00829871 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
+				DEVELOPMENT_TEAM = 42ZYDMS3RW;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks";
 				INFOPLIST_FILE = iosApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = orgIdentifier.iosApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tr.pharmacy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -502,17 +631,20 @@
 		7555FFA7242A565B00829871 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
+				DEVELOPMENT_TEAM = 42ZYDMS3RW;
 				ENABLE_PREVIEWS = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../shared/build/xcode-frameworks";
 				INFOPLIST_FILE = iosApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = orgIdentifier.iosApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.tr.pharmacy;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -639,6 +771,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		16C6129B25B32A86001C0244 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swift-composable-architecture";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.10.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		16C6129C25B32A86001C0244 /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 16C6129B25B32A86001C0244 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7555FF73242A565900829871 /* Project object */;
 }

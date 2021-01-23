@@ -5,10 +5,34 @@ plugins {
     id("kotlinx-serialization")
     id("com.android.library")
     id("com.squareup.sqldelight")
+    id("io.gitlab.arturbosch.detekt")
 }
 
 group = "com.halilibo"
 version = "1.0"
+
+android {
+    compileSdkVersion(AndroidSdk.compile)
+    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
+
+    configurations {
+        create("androidTestApi")
+        create("androidTestDebugApi")
+        create("androidTestReleaseApi")
+        create("testApi")
+        create("testDebugApi")
+        create("testReleaseApi")
+    }
+
+    defaultConfig {
+        minSdkVersion(AndroidSdk.min)
+        targetSdkVersion(AndroidSdk.target)
+        versionCode = 1
+        versionName = "1.0"
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
+}
 
 kotlin {
     android()
@@ -38,6 +62,10 @@ kotlin {
                 // SQL Delight
                 implementation(SqlDelight.runtime)
                 implementation(SqlDelight.coroutineExtensions)
+
+                implementation("com.russhwolf:multiplatform-settings:0.7")
+                implementation("com.russhwolf:multiplatform-settings-no-arg:0.7")
+                implementation("com.russhwolf:multiplatform-settings-coroutines-native-mt:0.7")
 
                 // koin
                 api(Koin.core)
@@ -78,23 +106,10 @@ kotlin {
 // CocoaPods requires the podspec to have a version.
 version = "1.0"
 
-android {
-    compileSdkVersion(AndroidSdk.compile)
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    defaultConfig {
-        minSdkVersion(AndroidSdk.min)
-        targetSdkVersion(AndroidSdk.target)
-        versionCode = 1
-        versionName = "1.0"
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-}
-
 val packForXcode by tasks.creating(Sync::class) {
     group = "build"
     val mode = System.getenv("CONFIGURATION") ?: "DEBUG"
-    val sdkName = System.getenv("SDK_NAME") ?: "iphonesimulator"
+    val sdkName = System.getenv("SDK_NAME") ?: "iphoneos"
     val targetName = "ios" + if (sdkName.startsWith("iphoneos")) "Arm64" else "X64"
     val framework = kotlin.targets.getByName<KotlinNativeTarget>(targetName).binaries.getFramework(mode)
     inputs.property("mode", mode)
@@ -111,4 +126,20 @@ sqldelight {
         packageName = "com.halilibo.eczane.db"
         sourceFolders = listOf("sqldelight")
     }
+}
+
+detekt {
+    failFast = true
+    buildUponDefaultConfig = true
+
+    reports {
+        html.enabled = true // observe findings in your browser with structure and code snippets
+        txt.enabled =
+            true // similar to the console output, contains issue signature to manually edit baseline files
+    }
+}
+
+tasks.withType<io.gitlab.arturbosch.detekt.Detekt> {
+    // Target version of the generated JVM bytecode. It is used for type resolution.
+    this.jvmTarget = "1.8"
 }

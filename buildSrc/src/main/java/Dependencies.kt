@@ -2,17 +2,18 @@
 object Versions {
     const val kotlin = "1.4.21"
     const val kotlinCoroutines = "1.4.2-native-mt"
-    const val ktor = "1.4.0"
-    const val kotlinxSerialization = "1.0.0-RC"
+    const val ktor = "1.5.0"
+    const val kotlinxSerialization = "1.0.1"
     const val koin = "3.0.0-alpha-4"
     const val sqlDelight = "1.4.2"
     const val kermit = "0.1.8"
+    const val detekt = "1.15.0"
 
     const val sqliteJdbcDriver = "3.30.1"
     const val slf4j = "1.7.30"
-    const val compose = "1.0.0-alpha08"
-    const val nav_compose = "1.0.0-alpha03"
-    const val accompanist = "0.4.0"
+    const val compose = "1.0.0-alpha09"
+    const val nav_compose = "1.0.0-alpha04"
+    const val accompanist = "0.4.1"
 
     const val junit = "4.13"
     const val testRunner = "1.3.0"
@@ -27,6 +28,7 @@ object AndroidSdk {
 
 object Deps {
     const val kermit = "co.touchlab:kermit:${Versions.kermit}"
+    const val permissionDispatcher = "org.permissionsdispatcher:permissionsdispatcher-ktx:1.0.1"
 }
 
 object Test {
@@ -39,9 +41,15 @@ object Compose {
     const val uiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
     const val foundationLayout = "androidx.compose.foundation:foundation-layout:${Versions.compose}"
     const val material = "androidx.compose.material:material:${Versions.compose}"
+    const val icons = "androidx.compose.material:material-icons-core:${Versions.compose}"
+    const val iconsExtended = "androidx.compose.material:material-icons-extended:${Versions.compose}"
     const val runtimeLiveData = "androidx.compose.runtime:runtime-livedata:${Versions.compose}"
     const val navigation = "androidx.navigation:navigation-compose:${Versions.nav_compose}"
-    const val accompanist= "dev.chrisbanes.accompanist:accompanist-coil:${Versions.accompanist}"
+}
+
+object Accompanist {
+    const val coil = "dev.chrisbanes.accompanist:accompanist-coil:${Versions.accompanist}"
+    const val insets = "dev.chrisbanes.accompanist:accompanist-insets:${Versions.accompanist}"
 }
 
 object Koin {
@@ -81,5 +89,14 @@ object SqlDelight {
 
 object AndroidX {
     val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
+    val core = "androidx.core:core-ktx:1.5.0-alpha05"
+}
+
+object PlayServices {
+    val location = "com.google.android.gms:play-services-location:17.1.0"
+    val mapsKtx = "com.google.maps.android:maps-ktx:2.2.0"
+    val mapsUtilKtx = "com.google.maps.android:maps-utils-ktx:2.2.0"
+    val mapsPlayServices = "com.google.android.gms:play-services-maps:17.0.0"
+    val mapsPlayServicesUtils = "com.google.maps.android:android-maps-utils:2.0.3"
 }
 

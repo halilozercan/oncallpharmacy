@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">OnCall Pharmacies</string>
+    <string name="pharmacies_list_button_text">Nearest</string>
+    <string name="select_location">Choose Location</string>
+    <string name="navigate">Navigate</string>
+    <string name="my_location">My Location</string>
+    <string name="cities">Cities</string>
+    <string name="settings">Settings</string>
+    <string name="settings_theme_title">Theme</string>
+    <string name="settings_theme_description">Choose Dark or Light mode</string>
+    <string name="location">Location</string>
+    <string name="location_permission_request">Location access permission is required to find the closest Pharmacies to you.</string>
+    <string name="enable_uppercase">ENABLE</string>
+</resources>

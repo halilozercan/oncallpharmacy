@@ -1,14 +1,22 @@
 package com.halilibo.shared.repository
 
 import co.touchlab.kermit.Kermit
+import com.halilibo.eczane.db.OnCallPharmacyDatabase
+import com.halilibo.shared.*
+import com.halilibo.shared.local.mapToCity
+import com.halilibo.shared.local.mapToPharmacy
+import com.halilibo.shared.model.City
+import com.halilibo.shared.model.Coordinates
+import com.halilibo.shared.model.LocationBounds
 import com.halilibo.shared.model.Pharmacy
-import com.halilibo.shared.remote.City
 import com.halilibo.shared.remote.PharmacyApi
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
@@ -18,11 +26,8 @@ class PharmacyRepository() : KoinComponent {
     private val logger: Kermit by inject()
 
     private val coroutineScope: CoroutineScope = MainScope()
-    private val onCallPharmacyDatabase = createDb()
+    private val onCallPharmacyDatabase: OnCallPharmacyDatabase by inject()
     private val onCallPharmacyQueries = onCallPharmacyDatabase.onCallPharmacyQueries
-
-    var peopleJob: Job? = null
-    var issPositionJob: Job? = null
 
     init {
         coroutineScope.launch {
@@ -30,46 +35,91 @@ class PharmacyRepository() : KoinComponent {
         }
     }
 
-    // TODO: Order pharmacies by distance
-
-    fun getPharmaciesByCityAsFlow(cityId: Int): Flow<List<Pharmacy>> {
+    fun getPharmaciesByCity(
+        cityId: Int,
+        center: Coordinates?
+    ): CommonFlow<List<Pharmacy>> {
         coroutineScope.launch {
-            fetchAndStorePharmacies(cityId)
+            fetchAndStorePharmaciesByCity(cityId)
         }
 
         return onCallPharmacyQueries.selectPharmacyByCity(
-            city_id = cityId.toLong(),
-            mapper = { id: Long,
-                       city_id: Long,
-                       city_name: String,
-                       name: String,
-                       address: String,
-                       longitude: String?,
-                       latitude: String?,
-                       notes: String?,
-                       phone: String? ->
-                Pharmacy(
-                    name = name,
-                    address = address,
-                    longitude = longitude ?: "",
-                    latitude = latitude ?: "",
-                    notes = notes ?: "",
-                    phone = phone ?: "",
-                    city = City(id = city_id.toInt(), name = city_name)
-                )
-            })
+            city_id = cityId.toLong()
+        )
             .asFlow()
             .mapToList()
+            .mapToPharmacy()
+            .apply { if(center != null) sortByDistance(center) }
+            .asCommonFlow()
+    }
+
+    fun getPharmaciesByLocation(
+        center: Coordinates,
+        bounds: LocationBounds?
+    ): CommonFlow<List<Pharmacy>> {
+        // Check whether database has information about this block.
+        // If there is no information or outdated information, go ahead and fetch it from API
+        // If there is information in database pass it first.
+
+        val allCoordinates = mutableSetOf(
+            center,
+            bounds?.northEast,
+            bounds?.southWest,
+            bounds?.northWest,
+            bounds?.southEast
+        )
+            .filterNotNull()
+            .distinctBy { it.locationBlock }
+
+        allCoordinates.forEach { location ->
+            val isBlockFetched = onCallPharmacyQueries
+                .selectBlockCache(location.locationBlock)
+                .executeAsOneOrNull() != null
+
+            if (!isBlockFetched) {
+                coroutineScope.launch {
+                    val locationPharmacyListResponse = pharmacyApi
+                        .fetchPharmaciesByLocation(
+                            lat = location.latitude,
+                            lng = location.longitude
+                        )
+
+                    onCallPharmacyQueries.insertBlockCache(location.locationBlock)
+
+                    locationPharmacyListResponse.list.forEach {
+                        onCallPharmacyQueries.insertPharmacy(
+                            name = it.name,
+                            city_id = it.cityId.toLong(),
+                            longitude = it.longitude,
+                            latitude = it.latitude,
+                            address = it.address,
+                            notes = it.notes,
+                            phone = it.phone,
+                            block = getLocationBlock(it.latitude, it.longitude)
+                        )
+                    }
+                }
+            }
+        }
+
+        return onCallPharmacyQueries.selectPharmacyByBlock(
+            allCoordinates.map { it.locationBlock }
+        )
+            .asFlow()
+            .mapToList()
+            .mapToPharmacy()
+            .sortByDistance(center)
+            .asCommonFlow()
     }
 
     private suspend fun fetchAndStorePharmaciesDefaultCities() {
-        fetchAndStorePharmacies(6) // Ankara
-        fetchAndStorePharmacies(34) // Istanbul
-        fetchAndStorePharmacies(35) // Izmir
+        fetchAndStorePharmaciesByCity(6) // Ankara
+        fetchAndStorePharmaciesByCity(34) // Istanbul
+        fetchAndStorePharmaciesByCity(35) // Izmir
     }
 
-    private suspend fun fetchAndStorePharmacies(cityId: Int)  {
-        logger.d { "fetchAndStorePeople" }
+    private suspend fun fetchAndStorePharmaciesByCity(cityId: Int) {
+        logger.d { "fetchAndStorePharmaciesByCity $cityId" }
         val result = pharmacyApi.fetchPharmaciesByCity(cityId)
 
         // this is very basic implementation for now that removes all existing rows
@@ -79,80 +129,35 @@ class PharmacyRepository() : KoinComponent {
             onCallPharmacyQueries.insertPharmacy(
                 name = it.name,
                 city_id = cityId.toLong(),
-                city_name = it.cityName,
                 longitude = it.longitude,
                 latitude = it.latitude,
                 address = it.address,
                 notes = it.notes,
-                phone = it.phone
+                phone = it.phone,
+                block = getLocationBlock(it.latitude, it.longitude)
             )
         }
     }
 
-    fun getCitiesAsFlow(): Flow<List<City>> {
-        return flow {
-            val cities = getCities()
-            emit(cities)
-        }
+    fun getCities(): CommonFlow<List<City>> {
+        return onCallPharmacyQueries.selectAllCity()
+            .asFlow()
+            .mapToList()
+            .mapToCity()
+            .asCommonFlow()
     }
+}
 
-    private suspend fun getCities() = onCallPharmacyQueries.selectAllCity(mapper = { id, name ->
-        City(id.toInt(), name)
-    }).executeAsList()
-//
-//    // Used by web client atm
-    private suspend fun fetchPharmaciesByCity(cityId: Int) = pharmacyApi.fetchPharmaciesByCity(cityId)
-//
-//    fun getPersonBio(personName: String): String {
-//        return personBios[personName] ?: ""
-//    }
-//
-//    fun getPersonImage(personName: String): String {
-//        return personImages[personName] ?: ""
-//    }
-//
-//    // called from Kotlin/Native clients
-//    fun startObservingPeopleUpdates(success: (List<Assignment>) -> Unit) {
-//        logger.d { "startObservingPeopleUpdates" }
-//        peopleJob = coroutineScope.launch {
-//            fetchPeopleAsFlow().collect {
-//                success(it)
-//            }
-//        }
-//    }
-//
-//    fun stopObservingPeopleUpdates() {
-//        logger.d { "stopObservingPeopleUpdates, peopleJob = $peopleJob" }
-//        peopleJob?.cancel()
-//    }
-//
-//
-//    fun startObservingISSPosition(success: (IssPosition) -> Unit) {
-//        logger.d { "startObservingISSPosition" }
-//        issPositionJob = coroutineScope.launch {
-//            pollISSPosition().collect {
-//                success(it)
-//            }
-//        }
-//    }
-//
-//    fun stopObservingISSPosition() {
-//        logger.d { "stopObservingISSPosition, peopleJob = $issPositionJob" }
-//        issPositionJob?.cancel()
-//    }
-//
-//
-//    fun pollISSPosition(): Flow<IssPosition> = flow {
-//        while (true) {
-//            val position = peopleInSpaceApi.fetchISSPosition().iss_position
-//            emit(position)
-//            logger.d("PeopleInSpaceRepository") { position.toString() }
-//            delay(POLL_INTERVAL)
-//        }
-//    }
-
-    companion object {
-        private const val POLL_INTERVAL = 10000L
+fun Flow<List<Pharmacy>>.sortByDistance(center: Coordinates): Flow<List<Pharmacy>> = map {
+    it.sortedBy { pharmacy ->
+        distance(
+            lat1 = center.latitude,
+            lat2 = pharmacy.latitude,
+            lon1 = center.longitude,
+            lon2 = pharmacy.longitude,
+            el1 = .0,
+            el2 = .0
+        )
     }
 }
 

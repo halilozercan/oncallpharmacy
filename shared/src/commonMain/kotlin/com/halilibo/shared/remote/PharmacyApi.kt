@@ -7,35 +7,40 @@ import kotlinx.serialization.Serializable
 import org.koin.core.KoinComponent
 
 @Serializable
-data class CityPharmacyListResponse(val list: List<PharmacyDto>)
+internal data class CityPharmacyListResponse(val list: List<PharmacyDto>)
 
 @Serializable
-data class City(
-    val id: Int,
-    val name: String
-)
+internal data class LocationPharmacyListResponse(val list: List<PharmacyLocationDto>)
 
 @Serializable
-data class County(
-    val id: Int,
-    val name: String,
-    val cityId: Int
-)
-
-@Serializable
-data class PharmacyDto(
+internal data class PharmacyDto(
     val address: String,
     val name: String,
     val notes: String,
-    val longitude: String,
-    val latitude: String,
+    val longitude: Double,
+    val latitude: Double,
     val phone: String,
     @SerialName("city_name") val cityName: String
 )
 
-class PharmacyApi(
+@Serializable
+internal data class PharmacyLocationDto(
+    val address: String,
+    val name: String,
+    val notes: String,
+    val longitude: Double,
+    val latitude: Double,
+    val phone: String,
+    @SerialName("city_id") val cityId: Int,
+    @SerialName("city_name") val cityName: String
+)
+
+internal class PharmacyApi(
     private val client: HttpClient,
     private val baseUrl: String = "https://eczane.turqu.net",
 ) : KoinComponent {
     suspend fun fetchPharmaciesByCity(cityId: Int) = client.get<CityPharmacyListResponse>("$baseUrl/$cityId")
+
+    suspend fun fetchPharmaciesByLocation(lat: Double, lng: Double) =
+        client.get<LocationPharmacyListResponse>("$baseUrl/location?lat=$lat&lng=$lng")
 }

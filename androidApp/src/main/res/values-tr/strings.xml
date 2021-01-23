@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Nöbetçi Eczaneler</string>
+    <string name="pharmacies_list_button_text">Eczaneler</string>
+    <string name="select_location">Konum seç</string>
+    <string name="navigate">Yol Tarifi</string>
+    <string name="my_location">Konumum</string>
+    <string name="cities">Şehirler</string>
+    <string name="settings">Ayarlar</string>
+    <string name="settings_theme_title">Tema Tercihi</string>
+    <string name="settings_theme_description">Gece ya da Gündüz modunu seç</string>
+    <string name="location">Konum</string>
+    <string name="location_permission_request">Konum izni, size en yakın Nöbetçi Eczaneleri göstermek için gereklidir.</string>
+    <string name="enable_uppercase">İZİN VER</string>
+</resources>
