@@ -3,6 +3,8 @@
 I developed an API for querying OnCall pharmacies in Turkey with respect to city and district a while back for a completely unrelated reason to this repository. 
 API is actually as simple as it sounds. 
 
+Authors: [@halilozercan](https://github.com/halilozercan) [@cagatayemekci](https://github.com/cagatayemekci)
+
 ```
 GET https://eczane.turqu.net/{cityLicensePlateId}
 
