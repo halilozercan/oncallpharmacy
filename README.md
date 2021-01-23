@@ -97,4 +97,4 @@ Both Apple Maps and Google Maps have similar APIs that made it easy to implement
 
 Here is a demo of Android Application.
 
-[![Android App Demo Video](https://img.youtube.com/vi/2tH0I4hS9vU/0.jpg)](https://www.youtube.com/watch?v=2tH0I4hS9vU)
+[![Android App Demo Video](https://img.youtube.com/vi/TEpAg6cHo_E/0.jpg)](https://www.youtube.com/watch?v=TEpAg6cHo_E)
