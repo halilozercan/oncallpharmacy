@@ -10,6 +10,7 @@ plugins {
 detekt {
     failFast = true
     buildUponDefaultConfig = true
+    baseline = file("$projectDir/config/baseline.xml")
 
     reports {
         html.enabled = true // observe findings in your browser with structure and code snippets
@@ -124,5 +125,9 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+
+    lintOptions {
+        isAbortOnError = false
     }
 }

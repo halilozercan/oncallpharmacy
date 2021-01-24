@@ -1,0 +1,146 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>ComplexMethod:HomePage.kt$@ExperimentalAnimationApi @ExperimentalMaterialApi @Composable fun HomePage()</ID>
+    <ID>EmptyFunctionBlock:HomePage.kt$&lt;no name provided&gt;${}</ID>
+    <ID>FinalNewline:com.halilibo.eczane.MainActivity.kt:1</ID>
+    <ID>FinalNewline:com.halilibo.eczane.OnCallPharmacyApplication.kt:1</ID>
+    <ID>FinalNewline:com.halilibo.eczane.di.ViewModelModule.kt:1</ID>
+    <ID>FinalNewline:com.halilibo.eczane.ui.common.BackPressHandler.kt:1</ID>
+    <ID>FinalNewline:com.halilibo.eczane.ui.common.ComposeMapView.kt:1</ID>
+    <ID>FinalNewline:com.halilibo.eczane.ui.common.Theme.kt:1</ID>
+    <ID>FinalNewline:com.halilibo.eczane.ui.main.home.HomePage.kt:1</ID>
+    <ID>FinalNewline:com.halilibo.eczane.ui.main.home.HomeViewModel.kt:1</ID>
+    <ID>FinalNewline:com.halilibo.eczane.ui.main.home.PharmacyPager.kt:1</ID>
+    <ID>LongMethod:HomePage.kt$@ExperimentalAnimationApi @ExperimentalMaterialApi @Composable fun HomePage()</ID>
+    <ID>LongMethod:LocationPermissionPage.kt$@ExperimentalMaterialApi @Composable fun LocationPermissionPage( onPermissionGrantStatusChange: (PermissionGrantStatus) -&gt; Unit, onNavigateBack: () -&gt; Unit )</ID>
+    <ID>LongMethod:PharmacyPager.kt$@Composable fun PharmacyPager( pharmacyList: List&lt;Pharmacy&gt;, selectedPharmacy: Pharmacy?, onPharmacySelect: (Pharmacy) -&gt; Unit, distance: (Pharmacy) -&gt; String, modifier: Modifier = Modifier )</ID>
+    <ID>LongMethod:SettingsPage.kt$@ExperimentalMaterialApi @Composable fun SettingsPage( onNavigateBack: () -&gt; Unit )</ID>
+    <ID>MagicNumber:HomePage.kt$100</ID>
+    <ID>MagicNumber:HomePage.kt$11f</ID>
+    <ID>MagicNumber:HomePage.kt$12f</ID>
+    <ID>MagicNumber:HomePage.kt$15f</ID>
+    <ID>MagicNumber:HomePage.kt$16</ID>
+    <ID>MagicNumber:HomePage.kt$200</ID>
+    <ID>MagicNumber:HomePage.kt$26.0</ID>
+    <ID>MagicNumber:HomePage.kt$32</ID>
+    <ID>MagicNumber:HomePage.kt$36.0</ID>
+    <ID>MagicNumber:HomePage.kt$4</ID>
+    <ID>MagicNumber:HomePage.kt$42.0</ID>
+    <ID>MagicNumber:HomePage.kt$45.0</ID>
+    <ID>MagicNumber:HomePage.kt$6f</ID>
+    <ID>MagicNumber:HomeViewModel.kt$HomeViewModel$100</ID>
+    <ID>MagicNumber:HomeViewModel.kt$HomeViewModel$1000</ID>
+    <ID>MagicNumber:LocationListPage.kt$10</ID>
+    <ID>MagicNumber:LocationListPage.kt$16</ID>
+    <ID>MagicNumber:LocationListPage.kt$20</ID>
+    <ID>MagicNumber:LocationListPage.kt$24</ID>
+    <ID>MagicNumber:LocationListPage.kt$48</ID>
+    <ID>MagicNumber:LocationListPage.kt$8</ID>
+    <ID>MagicNumber:LocationPermissionPage.kt$16</ID>
+    <ID>MagicNumber:LocationPermissionPage.kt$48</ID>
+    <ID>MagicNumber:PharmacyPager.kt$0.85f</ID>
+    <ID>MagicNumber:PharmacyPager.kt$0xFF28a745</ID>
+    <ID>MagicNumber:PharmacyPager.kt$12</ID>
+    <ID>MagicNumber:PharmacyPager.kt$14</ID>
+    <ID>MagicNumber:PharmacyPager.kt$16</ID>
+    <ID>MagicNumber:PharmacyPager.kt$22</ID>
+    <ID>MagicNumber:PharmacyPager.kt$6</ID>
+    <ID>MagicNumber:PharmacyPager.kt$8</ID>
+    <ID>MagicNumber:SettingsPage.kt$14</ID>
+    <ID>MagicNumber:SettingsPage.kt$16</ID>
+    <ID>MagicNumber:SettingsPage.kt$18</ID>
+    <ID>MagicNumber:SettingsPage.kt$22</ID>
+    <ID>MagicNumber:SettingsPage.kt$48</ID>
+    <ID>MagicNumber:SettingsPage.kt$8</ID>
+    <ID>MagicNumber:Theme.kt$0xFF242424</ID>
+    <ID>MagicNumber:Theme.kt$0xFF283593</ID>
+    <ID>MagicNumber:Theme.kt$0xFF3949AB</ID>
+    <ID>MagicNumber:Theme.kt$0xFFB71C1C</ID>
+    <ID>MagicNumber:Theme.kt$0xFFC62828</ID>
+    <ID>MagicNumber:Theme.kt$0xFFF1F1F1</ID>
+    <ID>MagicNumber:Theme.kt$1.25</ID>
+    <ID>MagicNumber:Theme.kt$18</ID>
+    <ID>MaxLineLength:LocationPermissionPage.kt$(AmbientView.current.height - AmbientWindowInsets.current.systemBars.top - AmbientWindowInsets.current.systemBars.bottom).toDp()</ID>
+    <ID>MaximumLineLength:com.halilibo.eczane.ui.main.LocationPermissionPage.kt:60</ID>
+    <ID>MemberNameEqualsClassName:ComposeMapView.kt$GoogleMapState$private val googleMapState: MutableState&lt;GoogleMap?&gt; = mutableStateOf(null)</ID>
+    <ID>NewLineAtEndOfFile:BackPressHandler.kt$com.halilibo.eczane.ui.common.BackPressHandler.kt</ID>
+    <ID>NewLineAtEndOfFile:ComposeMapView.kt$com.halilibo.eczane.ui.common.ComposeMapView.kt</ID>
+    <ID>NewLineAtEndOfFile:HomePage.kt$com.halilibo.eczane.ui.main.home.HomePage.kt</ID>
+    <ID>NewLineAtEndOfFile:HomeViewModel.kt$com.halilibo.eczane.ui.main.home.HomeViewModel.kt</ID>
+    <ID>NewLineAtEndOfFile:MainActivity.kt$com.halilibo.eczane.MainActivity.kt</ID>
+    <ID>NewLineAtEndOfFile:OnCallPharmacyApplication.kt$com.halilibo.eczane.OnCallPharmacyApplication.kt</ID>
+    <ID>NewLineAtEndOfFile:PharmacyPager.kt$com.halilibo.eczane.ui.main.home.PharmacyPager.kt</ID>
+    <ID>NewLineAtEndOfFile:Theme.kt$com.halilibo.eczane.ui.common.Theme.kt</ID>
+    <ID>NewLineAtEndOfFile:ViewModelModule.kt$com.halilibo.eczane.di.ViewModelModule.kt</ID>
+    <ID>NoBlankLineBeforeRbrace:com.halilibo.eczane.ui.common.ComposeMapView.kt:107</ID>
+    <ID>NoBlankLineBeforeRbrace:com.halilibo.eczane.ui.main.home.HomeViewModel.kt:132</ID>
+    <ID>NoBlankLineBeforeRbrace:com.halilibo.eczane.ui.main.locationlist.LocationListViewModel.kt:19</ID>
+    <ID>NoConsecutiveBlankLines:com.halilibo.eczane.MainActivity.kt:14</ID>
+    <ID>NoConsecutiveBlankLines:com.halilibo.eczane.util.PlayServicesExt.kt:17</ID>
+    <ID>NoConsecutiveBlankLines:com.halilibo.eczane.util.PlayServicesExt.kt:66</ID>
+    <ID>NoMultipleSpaces:com.halilibo.eczane.ui.common.ComposeMapView.kt:24</ID>
+    <ID>NoUnusedImports:com.halilibo.eczane.ui.main.locationlist.LocationListViewModel.kt:3</ID>
+    <ID>NoUnusedImports:com.halilibo.eczane.ui.main.settings.SettingsViewModel.kt:3</ID>
+    <ID>NoWildcardImports:com.halilibo.eczane.ui.common.BackPressHandler.kt:4</ID>
+    <ID>NoWildcardImports:com.halilibo.eczane.ui.common.ComposeMapView.kt:14</ID>
+    <ID>NoWildcardImports:com.halilibo.eczane.ui.common.ComposeMapView.kt:5</ID>
+    <ID>NoWildcardImports:com.halilibo.eczane.ui.common.KoinViewModel.kt:10</ID>
+    <ID>NoWildcardImports:com.halilibo.eczane.ui.common.KoinViewModel.kt:8</ID>
+    <ID>NoWildcardImports:com.halilibo.eczane.ui.common.Pager.kt:9</ID>
+    <ID>NoWildcardImports:com.halilibo.eczane.ui.common.Theme.kt:8</ID>
+    <ID>NoWildcardImports:com.halilibo.eczane.ui.main.LocationPermissionPage.kt:5</ID>
+    <ID>NoWildcardImports:com.halilibo.eczane.ui.main.LocationPermissionPage.kt:7</ID>
+    <ID>NoWildcardImports:com.halilibo.eczane.ui.main.home.HomePage.kt:10</ID>
+    <ID>NoWildcardImports:com.halilibo.eczane.ui.main.home.HomePage.kt:11</ID>
+    <ID>NoWildcardImports:com.halilibo.eczane.ui.main.home.HomePage.kt:17</ID>
+    <ID>NoWildcardImports:com.halilibo.eczane.ui.main.home.HomePage.kt:27</ID>
+    <ID>NoWildcardImports:com.halilibo.eczane.ui.main.home.HomePage.kt:31</ID>
+    <ID>NoWildcardImports:com.halilibo.eczane.ui.main.home.HomePage.kt:8</ID>
+    <ID>NoWildcardImports:com.halilibo.eczane.ui.main.home.HomeViewModel.kt:16</ID>
+    <ID>NoWildcardImports:com.halilibo.eczane.ui.main.home.PharmacyPager.kt:5</ID>
+    <ID>NoWildcardImports:com.halilibo.eczane.ui.main.home.PharmacyPager.kt:7</ID>
+    <ID>NoWildcardImports:com.halilibo.eczane.ui.main.locationlist.LocationListPage.kt:4</ID>
+    <ID>NoWildcardImports:com.halilibo.eczane.ui.main.locationlist.LocationListPage.kt:6</ID>
+    <ID>NoWildcardImports:com.halilibo.eczane.ui.main.locationlist.LocationListViewModel.kt:8</ID>
+    <ID>NoWildcardImports:com.halilibo.eczane.ui.main.settings.SettingsPage.kt:6</ID>
+    <ID>NoWildcardImports:com.halilibo.eczane.ui.main.settings.SettingsPage.kt:8</ID>
+    <ID>NoWildcardImports:com.halilibo.eczane.ui.main.settings.SettingsViewModel.kt:8</ID>
+    <ID>ReturnCount:Extensions.kt$operator fun LocationBounds?.contains(location: Location?): Boolean</ID>
+    <ID>SpacingAroundColon:com.halilibo.eczane.ui.common.BackPressHandler.kt:18</ID>
+    <ID>SpacingAroundColon:com.halilibo.eczane.ui.common.ComposeMapView.kt:82</ID>
+    <ID>SpacingAroundColon:com.halilibo.eczane.ui.common.KoinViewModel.kt:37</ID>
+    <ID>SpacingAroundColon:com.halilibo.eczane.ui.common.KoinViewModel.kt:55</ID>
+    <ID>SpacingAroundKeyword:com.halilibo.eczane.ui.common.Theme.kt:45</ID>
+    <ID>SpacingAroundKeyword:com.halilibo.eczane.ui.main.home.HomePage.kt:216</ID>
+    <ID>SpacingAroundOperators:com.halilibo.eczane.ui.main.home.HomePage.kt:194</ID>
+    <ID>SpacingAroundOperators:com.halilibo.eczane.ui.main.home.HomePage.kt:203</ID>
+    <ID>TooGenericExceptionCaught:PlayServicesExt.kt$&lt;no name provided&gt;$t: Throwable</ID>
+    <ID>TooGenericExceptionCaught:PlayServicesExt.kt$e: Exception</ID>
+    <ID>WildcardImport:BackPressHandler.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:ComposeMapView.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:ComposeMapView.kt$import com.google.maps.android.ktx.*</ID>
+    <ID>WildcardImport:HomePage.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:HomePage.kt$import androidx.compose.material.*</ID>
+    <ID>WildcardImport:HomePage.kt$import androidx.compose.material.ModalBottomSheetValue.*</ID>
+    <ID>WildcardImport:HomePage.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:HomePage.kt$import com.google.android.gms.maps.model.*</ID>
+    <ID>WildcardImport:HomePage.kt$import com.halilibo.eczane.ui.common.*</ID>
+    <ID>WildcardImport:HomeViewModel.kt$import kotlinx.coroutines.flow.*</ID>
+    <ID>WildcardImport:KoinViewModel.kt$import kotlinx.coroutines.*</ID>
+    <ID>WildcardImport:KoinViewModel.kt$import kotlinx.coroutines.flow.*</ID>
+    <ID>WildcardImport:LocationListPage.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:LocationListPage.kt$import androidx.compose.material.*</ID>
+    <ID>WildcardImport:LocationListViewModel.kt$import kotlinx.coroutines.flow.*</ID>
+    <ID>WildcardImport:LocationPermissionPage.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:LocationPermissionPage.kt$import androidx.compose.material.*</ID>
+    <ID>WildcardImport:Pager.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:PharmacyPager.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:PharmacyPager.kt$import androidx.compose.material.*</ID>
+    <ID>WildcardImport:SettingsPage.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:SettingsPage.kt$import androidx.compose.material.*</ID>
+    <ID>WildcardImport:SettingsViewModel.kt$import kotlinx.coroutines.flow.*</ID>
+    <ID>WildcardImport:Theme.kt$import androidx.compose.runtime.*</ID>
+  </CurrentIssues>
+</SmellBaseline>
