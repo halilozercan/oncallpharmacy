@@ -1,9 +1,19 @@
 # OnCall Pharmacy Map Application (Turkey)
 
-I developed an API for querying OnCall pharmacies in Turkey with respect to city and district a while back for a completely unrelated reason to this repository. 
-API is actually as simple as it sounds. 
+This repository contains the source code for OnCall Pharmacies in Turkey App. This project utilizes Kotlin Multiplatform Mobile to achieve code sharing between Android and iOS apps. 
 
 Authors: [@halilozercan](https://github.com/halilozercan) [@cagatayemekci](https://github.com/cagatayemekci)
+
+## How does app look like?
+
+Here is a demo of Android Application.
+
+[![Android App Demo Video](https://img.youtube.com/vi/TEpAg6cHo_E/0.jpg)](https://www.youtube.com/watch?v=TEpAg6cHo_E)
+
+## Background
+
+I developed an API for querying OnCall pharmacies in Turkey with respect to city and district a while back for a completely unrelated reason to this repository. 
+API is actually as simple as it sounds. 
 
 ```
 GET https://eczane.turqu.net/{cityLicensePlateId}
@@ -94,9 +104,3 @@ Both Apple Maps and Google Maps have similar APIs that made it easy to implement
 - Remote API (ktor)
 - Repository Pattern
 - Domain Model
-
-## How does app look like?
-
-Here is a demo of Android Application.
-
-[![Android App Demo Video](https://img.youtube.com/vi/TEpAg6cHo_E/0.jpg)](https://www.youtube.com/watch?v=TEpAg6cHo_E)
