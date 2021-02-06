@@ -14,6 +14,8 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
+      - name: write maps api key
+        run: echo "MAPS_API_KEY=$MAPSAPIKEY" >> local.properties
       - name: Make Gradle executable
         run: chmod +x ./gradlew
       - name: Build with Gradle
@@ -24,5 +26,6 @@ jobs:
         uses: ShaunLWM/action-release-debugapk@master
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
+          MAPS_API_KEY: ${{ secrets.MAPSAPIKEY }}
           APP_FOLDER: androidApp
           RELEASE_TITLE: OnCall Pharmacy Android
