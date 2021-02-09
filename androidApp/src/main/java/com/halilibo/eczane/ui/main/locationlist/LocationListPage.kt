@@ -3,6 +3,7 @@ package com.halilibo.eczane.ui.main.locationlist
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
@@ -35,10 +36,9 @@ fun LocationListPage(
             Row {
                 IconButton(onClick = { onNavigateBack() }) {
                     Icon(
-                        Icons.Default.KeyboardArrowLeft.copy(
-                            defaultWidth = 48.dp,
-                            defaultHeight = 48.dp
-                        ),
+                        Icons.Default.KeyboardArrowLeft,
+                        modifier = Modifier.size(48.dp),
+                        contentDescription = null
                     )
                 }
             }

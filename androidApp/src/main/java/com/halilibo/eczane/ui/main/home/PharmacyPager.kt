@@ -107,7 +107,7 @@ fun PharmacyPager(
                         },
                         shape = RoundedCornerShape(percent = 50)
                     ) {
-                        Icon(Icons.Default.Phone)
+                        Icon(Icons.Default.Phone, contentDescription = null)
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = pharmacy.phone,
@@ -130,7 +130,7 @@ fun PharmacyPager(
                         },
                         shape = RoundedCornerShape(percent = 50)
                     ) {
-                        Icon(Icons.Default.Directions)
+                        Icon(Icons.Default.Directions, contentDescription = null)
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = "${stringResource(R.string.navigate)} ${distance(pharmacy)}",

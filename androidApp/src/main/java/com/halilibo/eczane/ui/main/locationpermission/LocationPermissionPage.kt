@@ -69,10 +69,9 @@ fun LocationPermissionPage(
             Row {
                 IconButton(onClick = { onNavigateBack() }) {
                     Icon(
-                        Icons.Default.KeyboardArrowLeft.copy(
-                            defaultWidth = 48.dp,
-                            defaultHeight = 48.dp
-                        ),
+                        Icons.Default.KeyboardArrowLeft,
+                        modifier = Modifier.size(48.dp),
+                        contentDescription = null
                     )
                 }
             }
@@ -89,7 +88,8 @@ fun LocationPermissionPage(
                 modifier = Modifier.weight(1f).fillMaxWidth()
             ) {
                 Image(
-                    imageVector = vectorResource(id = R.drawable.my_location_illustration)
+                    imageVector = vectorResource(id = R.drawable.my_location_illustration),
+                    contentDescription = null
                 )
             }
 

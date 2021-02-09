@@ -4,6 +4,7 @@ import android.location.Location
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animate
 import androidx.compose.animation.animatedFloat
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
@@ -60,7 +61,7 @@ fun HomePage() {
     val isBottomBarVisible = !homeState.isPharmacySelected &&
             modalBottomSheetState.targetValue == Hidden
 
-    val bottomBarContentOffset = animate(
+    val bottomBarContentOffset by animateDpAsState(
         with(modalBottomSheetState.progress) {
             if (from == Hidden && to == HalfExpanded) {
                 100.dp * (fraction)
@@ -138,7 +139,7 @@ fun HomePage() {
     }
 
     val bottomBarAlpha = animatedFloat(initVal = 1f)
-    onCommit(isBottomBarVisible) {
+    LaunchedEffect(isBottomBarVisible) {
         bottomBarAlpha.animateTo(if (isBottomBarVisible) 1f else 0f)
     }
 
@@ -169,7 +170,7 @@ fun HomePage() {
                     },
                     modifier = Modifier.offset(y = bottomBarContentOffset)
                 ) {
-                    Icon(Icons.Default.MyLocation, tint = Color.White)
+                    Icon(Icons.Default.MyLocation, tint = Color.White, contentDescription = null)
                 }
             } else {
                 FloatingActionButton(
@@ -178,7 +179,7 @@ fun HomePage() {
                     },
                     modifier = Modifier.offset(y = bottomBarContentOffset)
                 ) {
-                    Icon(Icons.Default.NearMe, tint = Color.White)
+                    Icon(Icons.Default.NearMe, tint = Color.White, contentDescription = null)
                 }
             }
         },
@@ -188,7 +189,7 @@ fun HomePage() {
                 modifier = Modifier.navigationBarsPadding().offset(y = bottomBarContentOffset)
             ) {
                 BottomNavigationItem(
-                    icon = { Icon(Icons.Default.FlightTakeoff) },
+                    icon = { Icon(Icons.Default.FlightTakeoff, contentDescription = null) },
                     selected = false,
                     onClick = {
                         bottomSheetNavigationState= BottomSheetDestination.CitiesList
@@ -197,7 +198,7 @@ fun HomePage() {
                     label = { Text(stringResource(R.string.cities)) }
                 )
                 BottomNavigationItem(
-                    icon = { Icon(Icons.Default.Settings) },
+                    icon = { Icon(Icons.Default.Settings, contentDescription = null) },
                     selected = false,
                     onClick = {
                         bottomSheetNavigationState= BottomSheetDestination.Settings
@@ -320,7 +321,7 @@ fun GoogleMap.ZoomToSelectedPharmacyWhenAvailable(
 
     selectedPharmacy ?: return
 
-    onCommit(selectedPharmacy, googleMap) {
+    LaunchedEffect(selectedPharmacy, googleMap) {
         googleMap.animateCamera(
             CameraUpdateFactory.newCameraPosition(
                 CameraPosition.fromLatLngZoom(
@@ -347,7 +348,7 @@ fun GoogleMap.DecideMapsTheme() {
 
     val googleMap = this
 
-    onCommit(googleMap, isDarkTheme) {
+    LaunchedEffect(googleMap, isDarkTheme) {
         if (isDarkTheme) {
             googleMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
@@ -369,7 +370,7 @@ fun GoogleMap.SetLocationSourceWhenAvailable(location: Location?) {
     val googleMap = this
 
     val locationSource = rememberLocationSource(location)
-    onCommit(googleMap, locationSource) {
+    LaunchedEffect(googleMap, locationSource) {
         if (locationSource != null) {
             googleMap.setLocationSource(locationSource)
             googleMap.isMyLocationEnabled = true
@@ -385,7 +386,7 @@ fun GoogleMap.RenderPharmaciesWhenAvailable(
     onMarkersCreated: (List<Marker>) -> Unit
 ) {
     val googleMap = this
-    onCommit(pharmacyList, googleMap) {
+    LaunchedEffect(pharmacyList, googleMap) {
         googleMap.clear()
         val markers = pharmacyList.map {
             googleMap.addMarker {

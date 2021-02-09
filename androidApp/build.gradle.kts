@@ -93,7 +93,6 @@ android {
             )
         )
 
-
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -104,7 +103,7 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerVersion = "1.4.21"
+        kotlinCompilerVersion = "1.4.21-2"
         kotlinCompilerExtensionVersion = Versions.compose
     }
 

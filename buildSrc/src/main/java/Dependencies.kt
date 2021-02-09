@@ -1,6 +1,5 @@
-
 object Versions {
-    const val kotlin = "1.4.21"
+    const val kotlin = "1.4.21-2"
     const val kotlinCoroutines = "1.4.2-native-mt"
     const val ktor = "1.5.0"
     const val kotlinxSerialization = "1.0.1"
@@ -11,9 +10,9 @@ object Versions {
 
     const val sqliteJdbcDriver = "3.30.1"
     const val slf4j = "1.7.30"
-    const val compose = "1.0.0-alpha09"
-    const val nav_compose = "1.0.0-alpha04"
-    const val accompanist = "0.4.1"
+    const val compose = "1.0.0-alpha11"
+    const val nav_compose = "1.0.0-alpha06"
+    const val accompanist = "0.5.0"
 
     const val junit = "4.13"
     const val testRunner = "1.3.0"
@@ -99,4 +98,3 @@ object PlayServices {
     val mapsPlayServices = "com.google.android.gms:play-services-maps:17.0.0"
     val mapsPlayServicesUtils = "com.google.maps.android:android-maps-utils:2.0.3"
 }
-

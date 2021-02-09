@@ -50,7 +50,7 @@ fun SettingsPage(
                             )
                             Spacer(modifier = Modifier.weight(1f))
                             if (it == settingsState.themePreference) {
-                                Icon(Icons.Default.Check)
+                                Icon(Icons.Default.Check, contentDescription = null)
                             }
                         }
                     }
@@ -65,10 +65,9 @@ fun SettingsPage(
                 Row {
                     IconButton(onClick = { onNavigateBack() }) {
                         Icon(
-                            Icons.Default.KeyboardArrowLeft.copy(
-                                defaultWidth = 48.dp,
-                                defaultHeight = 48.dp
-                            ),
+                            Icons.Default.KeyboardArrowLeft,
+                            modifier = Modifier.size(48.dp),
+                            contentDescription = null
                         )
                     }
                 }

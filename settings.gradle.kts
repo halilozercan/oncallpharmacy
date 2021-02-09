@@ -1,7 +1,6 @@
 pluginManagement {
     repositories {
         google()
-        jcenter()
         gradlePluginPortal()
         mavenCentral()
     }
@@ -9,7 +8,5 @@ pluginManagement {
 }
 rootProject.name = "OnCallPharmacy"
 
-
 include(":androidApp")
 include(":shared")
-
