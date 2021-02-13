@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.halilibo.eczane.ui.common.statefulViewModel
 import com.halilibo.shared.model.City
-import dev.chrisbanes.accompanist.insets.AmbientWindowInsets
+import dev.chrisbanes.accompanist.insets.LocalWindowInsets
 import dev.chrisbanes.accompanist.insets.toPaddingValues
 
 @Composable
@@ -30,7 +30,7 @@ fun LocationListPage(
 
     LazyColumn(
         modifier = modifier,
-        contentPadding = AmbientWindowInsets.current.navigationBars.toPaddingValues()
+        contentPadding = LocalWindowInsets.current.navigationBars.toPaddingValues()
     ) {
         item {
             Row {

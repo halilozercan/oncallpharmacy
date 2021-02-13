@@ -10,9 +10,9 @@ import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.AmbientContext
-import androidx.compose.ui.platform.AmbientDensity
-import androidx.compose.ui.platform.AmbientView
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
@@ -21,7 +21,7 @@ import androidx.fragment.app.FragmentActivity
 import com.halilibo.eczane.R
 import com.halilibo.eczane.ui.main.home.PermissionGrantStatus
 import com.halilibo.shared.repository.getLogger
-import dev.chrisbanes.accompanist.insets.AmbientWindowInsets
+import dev.chrisbanes.accompanist.insets.LocalWindowInsets
 import permissions.dispatcher.ktx.LocationPermission
 import permissions.dispatcher.ktx.constructLocationPermissionRequest
 
@@ -31,7 +31,7 @@ fun LocationPermissionPage(
     onPermissionGrantStatusChange: (PermissionGrantStatus) -> Unit,
     onNavigateBack: () -> Unit
 ) {
-    val activity = AmbientContext.current as FragmentActivity
+    val activity = LocalContext.current as FragmentActivity
 
     val permissionsRequester = remember(activity, onPermissionGrantStatusChange) {
         activity.constructLocationPermissionRequest(
@@ -56,8 +56,8 @@ fun LocationPermissionPage(
     }
 
     Scaffold {
-        val totalHeight = with(AmbientDensity.current) {
-            (AmbientView.current.height - AmbientWindowInsets.current.systemBars.top - AmbientWindowInsets.current.systemBars.bottom).toDp()
+        val totalHeight = with(LocalDensity.current) {
+            (LocalView.current.height - LocalWindowInsets.current.systemBars.top - LocalWindowInsets.current.systemBars.bottom).toDp()
         }
 
         ScrollableColumn(

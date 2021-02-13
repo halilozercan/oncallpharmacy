@@ -14,8 +14,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.AmbientAnimationClock
-import androidx.compose.ui.platform.AmbientContext
+import androidx.compose.ui.platform.LocalAnimationClock
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -34,8 +34,8 @@ fun PharmacyPager(
     distance: (Pharmacy) -> String,
     modifier: Modifier = Modifier
 ) {
-    val clock = AmbientAnimationClock.current
-    val context = AmbientContext.current
+    val clock = LocalAnimationClock.current
+    val context = LocalContext.current
 
     val pagerState = remember(pharmacyList, selectedPharmacy) {
         val index = pharmacyList.indexOf(selectedPharmacy)

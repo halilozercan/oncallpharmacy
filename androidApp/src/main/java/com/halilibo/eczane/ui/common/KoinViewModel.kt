@@ -2,9 +2,9 @@ package com.halilibo.eczane.ui.common
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.platform.AmbientViewModelStoreOwner
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
@@ -16,11 +16,11 @@ import org.koin.core.qualifier.Qualifier
 import org.koin.ext.scope
 import java.util.concurrent.Executors
 
-@Composable inline fun <reified T : ViewModel> viewModel(
+@Composable inline fun <reified T : ViewModel> koinViewModel(
     qualifier: Qualifier? = null,
     noinline parameters: ParametersDefinition? = null
 ): Lazy<T> {
-    val viewModelStoreOwner = AmbientViewModelStoreOwner.current
+    val viewModelStoreOwner = LocalViewModelStoreOwner.current
     return lazy(LazyThreadSafetyMode.NONE) {
         KoinContextHandler.get().getViewModel(
             viewModelStoreOwner,
@@ -35,7 +35,7 @@ import java.util.concurrent.Executors
     qualifier: Qualifier? = null,
     noinline parameters: ParametersDefinition? = null
 ): Pair<T, S> where T: StatefulViewModel<S> {
-    val viewModelStoreOwner = AmbientViewModelStoreOwner.current
+    val viewModelStoreOwner = LocalViewModelStoreOwner.current
     val viewModel = KoinContextHandler.get().getViewModel(
         viewModelStoreOwner,
         T::class,

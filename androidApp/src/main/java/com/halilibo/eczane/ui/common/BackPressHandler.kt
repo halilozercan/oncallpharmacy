@@ -2,8 +2,8 @@ package com.halilibo.eczane.ui.common
 
 import androidx.activity.OnBackPressedCallback
 import androidx.compose.runtime.*
-import androidx.compose.ui.platform.AmbientContext
-import androidx.compose.ui.platform.AmbientLifecycleOwner
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.fragment.app.FragmentActivity
 
 @Composable
@@ -11,8 +11,8 @@ fun RegisterBackPressHandler(
     isEnabled: Boolean,
     callback: () -> Unit
 ) {
-    val activity = AmbientContext.current as FragmentActivity
-    val lifecycleOwner = AmbientLifecycleOwner.current
+    val activity = LocalContext.current as FragmentActivity
+    val lifecycleOwner = LocalLifecycleOwner.current
 
     val onBackPressedCallback = remember {
         object: OnBackPressedCallback(isEnabled) {
@@ -22,18 +22,18 @@ fun RegisterBackPressHandler(
         }
     }
 
-    onActive {
+    DisposableEffect(Unit) {
         activity.onBackPressedDispatcher.addCallback(
             lifecycleOwner,
             onBackPressedCallback
         )
+
+        onDispose {
+            onBackPressedCallback.remove()
+        }
     }
 
-    onCommit(isEnabled) {
+    LaunchedEffect(isEnabled) {
         onBackPressedCallback.isEnabled = isEnabled
-    }
-
-    onDispose {
-        onBackPressedCallback.remove()
     }
 }
