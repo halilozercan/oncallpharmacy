@@ -1,7 +1,12 @@
 package com.halilibo.eczane.ui.common
 
-import android.os.Parcelable
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.viewinterop.AndroidView
@@ -12,13 +17,15 @@ import androidx.lifecycle.LifecycleOwner
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.MapView
-import com.google.android.gms.maps.model.LatLngBounds
-import com.google.maps.android.ktx.*
-import com.halilibo.shared.model.Coordinates
-import com.halilibo.shared.model.LocationBounds
+import com.google.maps.android.ktx.CameraIdleEvent
+import com.google.maps.android.ktx.CameraMoveCanceledEvent
+import com.google.maps.android.ktx.CameraMoveEvent
+import com.google.maps.android.ktx.CameraMoveStartedEvent
+import com.google.maps.android.ktx.awaitMap
+import com.google.maps.android.ktx.buildGoogleMapOptions
+import com.google.maps.android.ktx.cameraEvents
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import kotlinx.parcelize.Parcelize
 
 @Composable
 fun ComposeGoogleMap(
@@ -69,14 +76,13 @@ fun ComposeGoogleMap(
     }
 }
 
-@Stable
 class ComposeGoogleMapState(
     private val onMapReady: (GoogleMap) -> Unit,
     private val cameraIdleListener: (GoogleMap) -> Unit,
     private val cameraMoveListener: (GoogleMap) -> Unit,
     private val cameraMoveCanceledListener: (GoogleMap) -> Unit,
     private val cameraMoveStartedListener: (GoogleMap, Int) -> Unit
-): State<GoogleMap?> {
+) : State<GoogleMap?> {
     private val googleMapState: MutableState<GoogleMap?> = mutableStateOf(null)
 
     internal var lifecycleObserver: LifecycleObserver? = null
@@ -121,7 +127,7 @@ fun rememberComposeGoogleMapState(
 }
 
 data class GoogleMapOptionsKtx(
-    // TODO: https://issuetracker.google.com/issues/180712131
+    // TODO(halilozercan): https://issuetracker.google.com/issues/180712131
     // val latLngBoundsForCameraTarget: LatLngBounds? = null,
     val liteMode: Boolean? = null,
     val mapToolbarEnabled: Boolean? = null,
@@ -150,7 +156,11 @@ data class GoogleMapOptionsKtx(
             source.minZoomPreference?.let { minZoomPreference(it) }
             source.rotateGesturesEnabled?.let { rotateGesturesEnabled(it) }
             source.scrollGesturesEnabled?.let { scrollGesturesEnabled(it) }
-            source.scrollGesturesEnabledDuringRotateOrZoom?.let { scrollGesturesEnabledDuringRotateOrZoom(it) }
+            source.scrollGesturesEnabledDuringRotateOrZoom?.let {
+                scrollGesturesEnabledDuringRotateOrZoom(
+                    it
+                )
+            }
             source.tiltGesturesEnabled?.let { tiltGesturesEnabled(it) }
             source.useViewLifecycleInFragment?.let { useViewLifecycleInFragment(it) }
             source.zOrderOnTop?.let { zOrderOnTop(it) }

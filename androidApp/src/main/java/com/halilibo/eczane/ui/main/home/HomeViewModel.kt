@@ -123,7 +123,6 @@ class HomeViewModel(
             )
         }
     }
-
 }
 
 enum class PermissionGrantStatus {

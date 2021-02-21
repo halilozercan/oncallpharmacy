@@ -98,8 +98,10 @@ fun HomePage() {
             homeViewModel.setVisibleBounds(googleMap.projection.visibleRegion.latLngBounds.locationBounds)
         },
         cameraMoveListener = { googleMap ->
+            val visibleRegionBounds = googleMap.projection.visibleRegion.latLngBounds.locationBounds
+
             isMyLocationVisibleOnMap = googleMap.cameraPosition.zoom >= ZOOM_RENDER_THRESHOLD &&
-                    homeStateHolder.value.currentLocation in googleMap.projection.visibleRegion.latLngBounds.locationBounds
+                    homeStateHolder.value.currentLocation in visibleRegionBounds
         }
     )
     val googleMap by composeGoogleMapState

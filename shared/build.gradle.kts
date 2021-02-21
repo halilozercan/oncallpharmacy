@@ -5,7 +5,6 @@ plugins {
     id("kotlinx-serialization")
     id("com.android.library")
     id("com.squareup.sqldelight")
-    id("io.gitlab.arturbosch.detekt")
 }
 
 group = "com.halilibo"
@@ -125,21 +124,4 @@ sqldelight {
         packageName = "com.halilibo.eczane.db"
         sourceFolders = listOf("sqldelight")
     }
-}
-
-detekt {
-    failFast = true
-    buildUponDefaultConfig = true
-    baseline = file("$projectDir/config/baseline.xml")
-
-    reports {
-        html.enabled = true // observe findings in your browser with structure and code snippets
-        txt.enabled =
-            true // similar to the console output, contains issue signature to manually edit baseline files
-    }
-}
-
-tasks.withType<io.gitlab.arturbosch.detekt.Detekt> {
-    // Target version of the generated JVM bytecode. It is used for type resolution.
-    this.jvmTarget = "1.8"
 }

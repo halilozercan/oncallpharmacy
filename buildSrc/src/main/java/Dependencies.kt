@@ -6,7 +6,6 @@ object Versions {
     const val koin = "3.0.0-alpha-4"
     const val sqlDelight = "1.4.2"
     const val kermit = "0.1.8"
-    const val detekt = "1.15.0"
 
     const val sqliteJdbcDriver = "3.30.1"
     const val slf4j = "1.7.30"

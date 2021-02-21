@@ -5,24 +5,6 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("kotlin-parcelize")
-    id("io.gitlab.arturbosch.detekt")
-}
-
-detekt {
-    failFast = true
-    buildUponDefaultConfig = true
-    baseline = file("$projectDir/config/baseline.xml")
-
-    reports {
-        html.enabled = true // observe findings in your browser with structure and code snippets
-        txt.enabled =
-            true // similar to the console output, contains issue signature to manually edit baseline files
-    }
-}
-
-tasks.withType<io.gitlab.arturbosch.detekt.Detekt> {
-    // Target version of the generated JVM bytecode. It is used for type resolution.
-    this.jvmTarget = "1.8"
 }
 
 dependencies {
@@ -52,8 +34,6 @@ dependencies {
     implementation(PlayServices.mapsPlayServicesUtils)
 
     implementation(Deps.permissionDispatcher)
-
-    detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${Versions.detekt}")
 
     testImplementation("junit:junit:4.13")
     androidTestImplementation("androidx.test:runner:1.3.0")
