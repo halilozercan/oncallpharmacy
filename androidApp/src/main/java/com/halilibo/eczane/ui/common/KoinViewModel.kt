@@ -13,7 +13,6 @@ import org.koin.androidx.viewmodel.koin.getViewModel
 import org.koin.core.context.KoinContextHandler
 import org.koin.core.parameter.ParametersDefinition
 import org.koin.core.qualifier.Qualifier
-import org.koin.ext.scope
 import java.util.concurrent.Executors
 
 @Composable inline fun <reified T : ViewModel> koinViewModel(

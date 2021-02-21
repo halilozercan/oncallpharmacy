@@ -157,9 +157,7 @@ data class GoogleMapOptionsKtx(
             source.rotateGesturesEnabled?.let { rotateGesturesEnabled(it) }
             source.scrollGesturesEnabled?.let { scrollGesturesEnabled(it) }
             source.scrollGesturesEnabledDuringRotateOrZoom?.let {
-                scrollGesturesEnabledDuringRotateOrZoom(
-                    it
-                )
+                scrollGesturesEnabledDuringRotateOrZoom(it)
             }
             source.tiltGesturesEnabled?.let { tiltGesturesEnabled(it) }
             source.useViewLifecycleInFragment?.let { useViewLifecycleInFragment(it) }

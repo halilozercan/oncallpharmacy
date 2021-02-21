@@ -2,6 +2,7 @@ package com.halilibo.eczane.ui.main.home
 
 import android.location.Location
 import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -104,97 +105,79 @@ fun HomePage() {
                     homeStateHolder.value.currentLocation in visibleRegionBounds
         }
     )
-    val googleMap by composeGoogleMapState
+    val googleMap = composeGoogleMapState.value
 
-    RegisterBackPressHandler(
-        isEnabled = modalBottomSheetState.value != Hidden,
-        callback = {
+    BackHandler(
+        enabled = modalBottomSheetState.value != Hidden,
+        onBack = {
             if (modalBottomSheetState.isVisible) {
                 modalBottomSheetState.hide()
             }
         }
     )
 
-    RegisterBackPressHandler(
-        isEnabled = homeState.isPharmacySelected,
-        callback = {
+    BackHandler(
+        enabled = homeState.isPharmacySelected,
+        onBack = {
             homeViewModel.setPharmacySelected(null)
         }
     )
 
-    googleMap?.run {
-        DecideMapsTheme()
-        SetLocationSourceWhenAvailable(homeState.currentLocation)
-        ZoomToCurrentLocationWhenAvailable(homeState.currentLocation)
+    if (googleMap != null) {
+        DecideMapsTheme(googleMap)
+        SetLocationSourceWhenAvailable(googleMap, homeState.currentLocation)
+        ZoomToCurrentLocationWhenAvailable(googleMap, homeState.currentLocation)
 
-        ZoomToSelectedPharmacyWhenAvailable(homeState.selectedPharmacy, markers)
-        RenderPharmaciesWhenAvailable(homeState.pharmacyList) { markers = it }
+        ZoomToSelectedPharmacyWhenAvailable(googleMap, homeState.selectedPharmacy, markers)
+        RenderPharmaciesWhenAvailable(googleMap, homeState.pharmacyList) { markers = it }
     }
 
     Scaffold(
-        topBar = {
-            Column {
-                Spacer(
-                    modifier = Modifier
-                        .statusBarsHeight()
-                        .fillMaxWidth()
-                        .background(MaterialTheme.colors.primarySurface.copy(alpha = 0.7f))
-                )
-            }
-        },
+        topBar = { StatusBarSpaceHolder() },
         isFloatingActionButtonDocked = true,
         floatingActionButtonPosition = FabPosition.Center,
         floatingActionButton = {
             val nearestPharmacy = homeState.pharmacyList.firstOrNull()
-            if (!isMyLocationVisibleOnMap || nearestPharmacy == null) {
-                FloatingActionButton(
-                    onClick = {
-                        if (homeState.locationPermissionStatus == PermissionGrantStatus.GRANTED) {
-                            zoomToLocation(homeState.currentLocation, googleMap)
-                        } else {
-                            bottomSheetNavigationState = BottomSheetDestination.LocationPermission
-                            modalBottomSheetState.animateTo(targetValue = Expanded)
+            val centerButtonState =
+                if (!isMyLocationVisibleOnMap || nearestPharmacy == null) {
+                    CenterButtonState.MY_LOCATION
+                } else {
+                    CenterButtonState.NEAREST_PHARMACY
+                }
+
+            HomePageCenterButton(
+                centerButtonState = centerButtonState,
+                onClick = {
+                    when (centerButtonState) {
+                        CenterButtonState.MY_LOCATION -> {
+                            if (homeState.locationPermissionStatus == PermissionGrantStatus.GRANTED) {
+                                zoomToLocation(homeState.currentLocation, googleMap)
+                            } else {
+                                bottomSheetNavigationState =
+                                    BottomSheetDestination.LocationPermission
+                                modalBottomSheetState.animateTo(targetValue = Expanded)
+                            }
                         }
-                    },
-                    modifier = Modifier.offset(y = bottomBarContentOffset)
-                ) {
-                    Icon(Icons.Default.MyLocation, tint = Color.White, contentDescription = null)
-                }
-            } else {
-                FloatingActionButton(
-                    onClick = {
-                        homeViewModel.setPharmacySelected(nearestPharmacy.phone)
-                    },
-                    modifier = Modifier.offset(y = bottomBarContentOffset)
-                ) {
-                    Icon(Icons.Default.NearMe, tint = Color.White, contentDescription = null)
-                }
-            }
+                        CenterButtonState.NEAREST_PHARMACY -> {
+                            homeViewModel.setPharmacySelected(nearestPharmacy?.phone)
+                        }
+                    }
+                },
+                modifier = Modifier.offset(y = bottomBarContentOffset)
+            )
         },
         bottomBar = {
-            BottomAppBar(
-                cutoutShape = MaterialTheme.shapes.small.copy(CornerSize(percent = 50)),
+            HomePageBottomBar(
+                onCitiesClick = {
+                    bottomSheetNavigationState = BottomSheetDestination.CitiesList
+                    modalBottomSheetState.animateTo(targetValue = Expanded)
+                },
+                onSettingsClick = {
+                    bottomSheetNavigationState = BottomSheetDestination.Settings
+                    modalBottomSheetState.animateTo(targetValue = Expanded)
+                },
                 modifier = Modifier.navigationBarsPadding().offset(y = bottomBarContentOffset)
-            ) {
-                BottomNavigationItem(
-                    icon = { Icon(Icons.Default.FlightTakeoff, contentDescription = null) },
-                    selected = false,
-                    onClick = {
-                        bottomSheetNavigationState = BottomSheetDestination.CitiesList
-                        modalBottomSheetState.animateTo(targetValue = Expanded)
-                    },
-                    label = { Text(stringResource(R.string.cities)) }
-                )
-                BottomNavigationItem(
-                    icon = { Icon(Icons.Default.Settings, contentDescription = null) },
-                    selected = false,
-                    onClick = {
-                        bottomSheetNavigationState = BottomSheetDestination.Settings
-                        modalBottomSheetState.animateTo(targetValue = Expanded)
-                    },
-                    label = { Text(stringResource(R.string.settings)) }
-                )
-            }
+            )
         }
     ) {
         ModalBottomSheetLayout(
@@ -277,10 +260,10 @@ fun HomePage() {
 }
 
 @Composable
-fun GoogleMap.ZoomToCurrentLocationWhenAvailable(
+fun ZoomToCurrentLocationWhenAvailable(
+    googleMap: GoogleMap,
     location: Location?,
 ) {
-    val googleMap = this
     LaunchedEffect(location, googleMap) {
         zoomToLocation(location, googleMap)
     }
@@ -301,12 +284,11 @@ fun zoomToLocation(
 }
 
 @Composable
-fun GoogleMap.ZoomToSelectedPharmacyWhenAvailable(
+fun ZoomToSelectedPharmacyWhenAvailable(
+    googleMap: GoogleMap,
     selectedPharmacy: Pharmacy?,
     markers: List<Marker>
 ) {
-    val googleMap = this
-
     selectedPharmacy ?: return
 
     LaunchedEffect(selectedPharmacy, googleMap) {
@@ -330,11 +312,9 @@ fun GoogleMap.ZoomToSelectedPharmacyWhenAvailable(
 }
 
 @Composable
-fun GoogleMap.DecideMapsTheme() {
+fun DecideMapsTheme(googleMap: GoogleMap) {
     val isDarkTheme = LocalDarkTheme.current
     val context = LocalContext.current
-
-    val googleMap = this
 
     LaunchedEffect(googleMap, isDarkTheme) {
         if (isDarkTheme) {
@@ -354,9 +334,7 @@ fun GoogleMap.DecideMapsTheme() {
 }
 
 @Composable
-fun GoogleMap.SetLocationSourceWhenAvailable(location: Location?) {
-    val googleMap = this
-
+fun SetLocationSourceWhenAvailable(googleMap: GoogleMap, location: Location?) {
     val locationSource = rememberLocationSource(location)
     LaunchedEffect(googleMap, locationSource) {
         if (locationSource != null) {
@@ -369,15 +347,11 @@ fun GoogleMap.SetLocationSourceWhenAvailable(location: Location?) {
 }
 
 @Composable
-fun GoogleMap.RenderPharmaciesWhenAvailable(
+fun RenderPharmaciesWhenAvailable(
+    googleMap: GoogleMap,
     pharmacyList: List<Pharmacy>,
     onMarkersCreated: (List<Marker>) -> Unit
 ) {
-    val googleMap = this
-
-    Log.d("CameraMove", "pharmacy count: ${pharmacyList.size}")
-    Log.d("CameraMove", "zoom level: ${googleMap.cameraPosition.zoom}")
-
     val shouldDraw = googleMap.cameraPosition.zoom >= ZOOM_RENDER_THRESHOLD
 
     LaunchedEffect(pharmacyList, shouldDraw) {
