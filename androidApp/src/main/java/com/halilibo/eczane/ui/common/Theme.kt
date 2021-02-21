@@ -54,7 +54,7 @@ fun OnCallPharmacyTheme(
         LightColorPalette
     }
 
-    Providers(AmbientDarkTheme provides isDarkTheme) {
+    Providers(LocalDarkTheme provides isDarkTheme) {
         MaterialTheme(
             colors = colors,
             content = content,
@@ -69,4 +69,4 @@ fun OnCallPharmacyTheme(
     }
 }
 
-val AmbientDarkTheme = ambientOf<Boolean> { error("No providers") }
+val LocalDarkTheme = compositionLocalOf<Boolean> { error("No providers") }

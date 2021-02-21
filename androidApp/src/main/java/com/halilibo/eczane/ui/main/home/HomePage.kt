@@ -1,9 +1,8 @@
 package com.halilibo.eczane.ui.main.home
 
 import android.location.Location
+import android.util.Log
 import androidx.compose.animation.ExperimentalAnimationApi
-import androidx.compose.animation.animate
-import androidx.compose.animation.animatedFloat
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CornerSize
@@ -18,7 +17,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.AmbientContext
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -26,7 +25,6 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.LocationSource
 import com.google.android.gms.maps.model.*
 import com.google.maps.android.ktx.addMarker
-import com.google.maps.android.ktx.buildGoogleMapOptions
 import com.halilibo.eczane.R
 import com.halilibo.eczane.ui.common.*
 import com.halilibo.eczane.ui.main.LocationPermissionPage
@@ -43,7 +41,10 @@ import dev.chrisbanes.accompanist.insets.statusBarsHeight
 @ExperimentalMaterialApi
 @Composable
 fun HomePage() {
-    val (homeViewModel, homeState) = statefulViewModel<HomeViewModel, HomeState>()
+    val homeViewModel by koinViewModel<HomeViewModel>()
+    val homeStateHolder = homeViewModel.stateFlow.collectAsState()
+    val homeState = homeStateHolder.value
+
     var bottomSheetNavigationState by remember {
         mutableStateOf<BottomSheetDestination>(BottomSheetDestination.CitiesList)
     }
@@ -52,30 +53,38 @@ fun HomePage() {
         initialValue = Hidden,
         confirmStateChange = { it != HalfExpanded }
     )
-//    val bottomSheetNavController = rememberNavController().apply { enableOnBackPressed(false) }
 
     var isMyLocationVisibleOnMap by remember { mutableStateOf(false) }
     var markers by remember { mutableStateOf(emptyList<Marker>()) }
 
-    val isBottomBarVisible = !homeState.isPharmacySelected &&
-            modalBottomSheetState.targetValue == Hidden
-
-    val bottomBarContentOffset = animate(
-        with(modalBottomSheetState.progress) {
-            if (from == Hidden && to == HalfExpanded) {
+    val bottomBarContentOffset = with(modalBottomSheetState.progress) {
+        when {
+            from == Hidden && to == HalfExpanded -> {
                 100.dp * (fraction)
-            } else if (from == HalfExpanded && to == Hidden) {
+            }
+            from == HalfExpanded && to == Hidden -> {
                 100.dp * (1 - fraction)
-            } else if (from == Hidden && to == Hidden && !homeState.isPharmacySelected) {
+            }
+            from == Hidden && to == Hidden && !homeState.isPharmacySelected -> {
                 0.dp
-            } else {
+            }
+            else -> {
                 100.dp
             }
         }
-    )
+    }
 
-    val (googleMap, onMapViewCreated) = rememberGoogleMapState(
+    val composeGoogleMapState = rememberComposeGoogleMapState(
         onMapReady = { googleMap ->
+            if (homeStateHolder.value.currentLocation == null) {
+                googleMap.moveCamera(
+                    CameraUpdateFactory.newLatLngBounds(
+                        LatLngBounds(LatLng(36.0, 26.0), LatLng(42.0, 45.0)),
+                        0
+                    )
+                )
+            }
+
             googleMap.setOnMarkerClickListener { marker ->
                 homeViewModel.setPharmacySelected(marker.snippet)
                 false
@@ -84,33 +93,16 @@ fun HomePage() {
                 homeViewModel.setPharmacySelected(null)
             }
             googleMap.uiSettings.isMyLocationButtonEnabled = false
-
-            googleMap.moveCamera(
-                CameraUpdateFactory.newLatLngBounds(
-                    LatLngBounds(LatLng(36.0, 26.0), LatLng(42.0, 45.0)),
-                    0
-                )
-            )
         },
         cameraIdleListener = { googleMap ->
-            if (googleMap.cameraPosition.zoom >= 11f) {
-                homeViewModel.setVisibleBounds(
-                    googleMap.projection.visibleRegion.latLngBounds.locationBounds
-                )
-            } else {
-                homeViewModel.clearPharmacyList()
-            }
+            homeViewModel.setVisibleBounds(googleMap.projection.visibleRegion.latLngBounds.locationBounds)
         },
         cameraMoveListener = { googleMap ->
-            if (googleMap.cameraPosition.zoom < 11f) {
-                isMyLocationVisibleOnMap = false
-                homeViewModel.clearPharmacyList()
-            } else {
-                isMyLocationVisibleOnMap =
-                    homeState.currentLocation in googleMap.projection.visibleRegion.latLngBounds.locationBounds
-            }
+            isMyLocationVisibleOnMap = googleMap.cameraPosition.zoom >= ZOOM_RENDER_THRESHOLD &&
+                    homeStateHolder.value.currentLocation in googleMap.projection.visibleRegion.latLngBounds.locationBounds
         }
     )
+    val googleMap by composeGoogleMapState
 
     RegisterBackPressHandler(
         isEnabled = modalBottomSheetState.value != Hidden,
@@ -135,11 +127,6 @@ fun HomePage() {
 
         ZoomToSelectedPharmacyWhenAvailable(homeState.selectedPharmacy, markers)
         RenderPharmaciesWhenAvailable(homeState.pharmacyList) { markers = it }
-    }
-
-    val bottomBarAlpha = animatedFloat(initVal = 1f)
-    onCommit(isBottomBarVisible) {
-        bottomBarAlpha.animateTo(if (isBottomBarVisible) 1f else 0f)
     }
 
     Scaffold(
@@ -169,7 +156,7 @@ fun HomePage() {
                     },
                     modifier = Modifier.offset(y = bottomBarContentOffset)
                 ) {
-                    Icon(Icons.Default.MyLocation, tint = Color.White)
+                    Icon(Icons.Default.MyLocation, tint = Color.White, contentDescription = null)
                 }
             } else {
                 FloatingActionButton(
@@ -178,7 +165,7 @@ fun HomePage() {
                     },
                     modifier = Modifier.offset(y = bottomBarContentOffset)
                 ) {
-                    Icon(Icons.Default.NearMe, tint = Color.White)
+                    Icon(Icons.Default.NearMe, tint = Color.White, contentDescription = null)
                 }
             }
         },
@@ -188,19 +175,19 @@ fun HomePage() {
                 modifier = Modifier.navigationBarsPadding().offset(y = bottomBarContentOffset)
             ) {
                 BottomNavigationItem(
-                    icon = { Icon(Icons.Default.FlightTakeoff) },
+                    icon = { Icon(Icons.Default.FlightTakeoff, contentDescription = null) },
                     selected = false,
                     onClick = {
-                        bottomSheetNavigationState= BottomSheetDestination.CitiesList
+                        bottomSheetNavigationState = BottomSheetDestination.CitiesList
                         modalBottomSheetState.animateTo(targetValue = Expanded)
                     },
                     label = { Text(stringResource(R.string.cities)) }
                 )
                 BottomNavigationItem(
-                    icon = { Icon(Icons.Default.Settings) },
+                    icon = { Icon(Icons.Default.Settings, contentDescription = null) },
                     selected = false,
                     onClick = {
-                        bottomSheetNavigationState= BottomSheetDestination.Settings
+                        bottomSheetNavigationState = BottomSheetDestination.Settings
                         modalBottomSheetState.animateTo(targetValue = Expanded)
                     },
                     label = { Text(stringResource(R.string.settings)) }
@@ -213,7 +200,7 @@ fun HomePage() {
             sheetElevation = 4.dp,
             sheetContent = {
                 Box(modifier = Modifier.heightIn(min = 200.dp)) {
-                    when(bottomSheetNavigationState) {
+                    when (bottomSheetNavigationState) {
                         is BottomSheetDestination.CitiesList -> {
                             LocationListPage(
                                 onCityClick = { city ->
@@ -257,15 +244,15 @@ fun HomePage() {
                     .background(MaterialTheme.colors.background)
                     .fillMaxSize()
             ) {
-                ComposeMapView(
-                    onMapViewCreated = onMapViewCreated,
+                ComposeGoogleMap(
+                    composeGoogleMapState = composeGoogleMapState,
                     modifier = Modifier.fillMaxSize(),
-                    googleMapOptions = buildGoogleMapOptions {
-                        mapToolbarEnabled(false)
-                        tiltGesturesEnabled(false)
-                        rotateGesturesEnabled(false)
-                        minZoomPreference(6f)
-                    }
+                    googleMapOptionsKtx = GoogleMapOptionsKtx(
+                        mapToolbarEnabled = false,
+                        tiltGesturesEnabled = false,
+                        rotateGesturesEnabled = false,
+                        minZoomPreference = 6f
+                    )
                 )
 
                 if (homeState.isPharmacySelected) {
@@ -320,7 +307,7 @@ fun GoogleMap.ZoomToSelectedPharmacyWhenAvailable(
 
     selectedPharmacy ?: return
 
-    onCommit(selectedPharmacy, googleMap) {
+    LaunchedEffect(selectedPharmacy, googleMap) {
         googleMap.animateCamera(
             CameraUpdateFactory.newCameraPosition(
                 CameraPosition.fromLatLngZoom(
@@ -342,12 +329,12 @@ fun GoogleMap.ZoomToSelectedPharmacyWhenAvailable(
 
 @Composable
 fun GoogleMap.DecideMapsTheme() {
-    val isDarkTheme = AmbientDarkTheme.current
-    val context = AmbientContext.current
+    val isDarkTheme = LocalDarkTheme.current
+    val context = LocalContext.current
 
     val googleMap = this
 
-    onCommit(googleMap, isDarkTheme) {
+    LaunchedEffect(googleMap, isDarkTheme) {
         if (isDarkTheme) {
             googleMap.setMapStyle(
                 MapStyleOptions.loadRawResourceStyle(
@@ -369,7 +356,7 @@ fun GoogleMap.SetLocationSourceWhenAvailable(location: Location?) {
     val googleMap = this
 
     val locationSource = rememberLocationSource(location)
-    onCommit(googleMap, locationSource) {
+    LaunchedEffect(googleMap, locationSource) {
         if (locationSource != null) {
             googleMap.setLocationSource(locationSource)
             googleMap.isMyLocationEnabled = true
@@ -385,14 +372,24 @@ fun GoogleMap.RenderPharmaciesWhenAvailable(
     onMarkersCreated: (List<Marker>) -> Unit
 ) {
     val googleMap = this
-    onCommit(pharmacyList, googleMap) {
+
+    Log.d("CameraMove", "pharmacy count: ${pharmacyList.size}")
+    Log.d("CameraMove", "zoom level: ${googleMap.cameraPosition.zoom}")
+
+    val shouldDraw = googleMap.cameraPosition.zoom >= ZOOM_RENDER_THRESHOLD
+
+    LaunchedEffect(pharmacyList, shouldDraw) {
         googleMap.clear()
-        val markers = pharmacyList.map {
-            googleMap.addMarker {
-                position(LatLng(it.latitude, it.longitude))
-                title(it.name)
-                snippet(it.phone)
+        val markers = if (shouldDraw) {
+            pharmacyList.map {
+                googleMap.addMarker {
+                    position(LatLng(it.latitude, it.longitude))
+                    title(it.name)
+                    snippet(it.phone)
+                }
             }
+        } else {
+            emptyList()
         }
         onMarkersCreated(markers)
     }
@@ -418,3 +415,5 @@ sealed class BottomSheetDestination(val route: String) {
     object Settings : BottomSheetDestination("settings")
     object LocationPermission : BottomSheetDestination("locationPermission")
 }
+
+const val ZOOM_RENDER_THRESHOLD = 10.5f

@@ -62,7 +62,7 @@
     <ID>MagicNumber:Theme.kt$0xFFF1F1F1</ID>
     <ID>MagicNumber:Theme.kt$1.25</ID>
     <ID>MagicNumber:Theme.kt$18</ID>
-    <ID>MaxLineLength:LocationPermissionPage.kt$(AmbientView.current.height - AmbientWindowInsets.current.systemBars.top - AmbientWindowInsets.current.systemBars.bottom).toDp()</ID>
+    <ID>MaxLineLength:LocationPermissionPage.kt$(LocalView.current.height - LocalWindowInsets.current.systemBars.top - LocalWindowInsets.current.systemBars.bottom).toDp()</ID>
     <ID>MaximumLineLength:com.halilibo.eczane.ui.main.LocationPermissionPage.kt:60</ID>
     <ID>MemberNameEqualsClassName:ComposeMapView.kt$GoogleMapState$private val googleMapState: MutableState&lt;GoogleMap?&gt; = mutableStateOf(null)</ID>
     <ID>NewLineAtEndOfFile:BackPressHandler.kt$com.halilibo.eczane.ui.common.BackPressHandler.kt</ID>

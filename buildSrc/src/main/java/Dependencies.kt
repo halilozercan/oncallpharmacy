@@ -1,6 +1,5 @@
-
 object Versions {
-    const val kotlin = "1.4.21"
+    const val kotlin = "1.4.30"
     const val kotlinCoroutines = "1.4.2-native-mt"
     const val ktor = "1.5.0"
     const val kotlinxSerialization = "1.0.1"
@@ -11,9 +10,9 @@ object Versions {
 
     const val sqliteJdbcDriver = "3.30.1"
     const val slf4j = "1.7.30"
-    const val compose = "1.0.0-alpha09"
-    const val nav_compose = "1.0.0-alpha04"
-    const val accompanist = "0.4.1"
+    const val compose = "1.0.0-alpha12"
+    const val nav_compose = "1.0.0-alpha07"
+    const val accompanist = "0.5.1"
 
     const val junit = "4.13"
     const val testRunner = "1.3.0"
@@ -45,6 +44,8 @@ object Compose {
     const val iconsExtended = "androidx.compose.material:material-icons-extended:${Versions.compose}"
     const val runtimeLiveData = "androidx.compose.runtime:runtime-livedata:${Versions.compose}"
     const val navigation = "androidx.navigation:navigation-compose:${Versions.nav_compose}"
+    const val activity = "androidx.activity:activity-compose:1.3.0-alpha02"
+    const val viewModel = "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha01"
 }
 
 object Accompanist {
@@ -89,7 +90,8 @@ object SqlDelight {
 
 object AndroidX {
     val viewModel = "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
-    val core = "androidx.core:core-ktx:1.5.0-alpha05"
+    val coreKtx = "androidx.core:core-ktx:1.5.0-alpha05"
+    val lifecycleExtensions = "androidx.lifecycle:lifecycle-extensions:2.2.0"
 }
 
 object PlayServices {
@@ -99,4 +101,3 @@ object PlayServices {
     val mapsPlayServices = "com.google.android.gms:play-services-maps:17.0.0"
     val mapsPlayServicesUtils = "com.google.maps.android:android-maps-utils:2.0.3"
 }
-

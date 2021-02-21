@@ -4,6 +4,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     kotlin("kapt")
+    id("kotlin-parcelize")
     id("io.gitlab.arturbosch.detekt")
 }
 
@@ -25,22 +26,18 @@ tasks.withType<io.gitlab.arturbosch.detekt.Detekt> {
 }
 
 dependencies {
-    implementation("androidx.appcompat:appcompat:1.2.0")
-    implementation("com.google.android.material:material:1.2.1")
-    implementation("androidx.lifecycle:lifecycle-extensions:2.2.0")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0")
-
-    implementation(AndroidX.core)
+    implementation(AndroidX.lifecycleExtensions)
+    implementation(AndroidX.coreKtx)
 
     implementation(Compose.ui)
     implementation(Compose.uiGraphics)
     implementation(Compose.uiTooling)
     implementation(Compose.foundationLayout)
     implementation(Compose.material)
-    implementation(Compose.runtimeLiveData)
-    implementation(Compose.navigation)
     implementation(Compose.icons)
     implementation(Compose.iconsExtended)
+    implementation(Compose.activity)
+    implementation(Compose.viewModel)
 
     implementation(Accompanist.coil)
     implementation(Accompanist.insets)
@@ -59,7 +56,7 @@ dependencies {
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting:${Versions.detekt}")
 
     testImplementation("junit:junit:4.13")
-    androidTestImplementation("androidx.test:runner:1.2.0")
+    androidTestImplementation("androidx.test:runner:1.3.0")
 
     implementation(project(":shared"))
 }
@@ -93,7 +90,6 @@ android {
             )
         )
 
-
         versionCode = 1
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -104,7 +100,6 @@ android {
     }
 
     composeOptions {
-        kotlinCompilerVersion = "1.4.21"
         kotlinCompilerExtensionVersion = Versions.compose
     }
 

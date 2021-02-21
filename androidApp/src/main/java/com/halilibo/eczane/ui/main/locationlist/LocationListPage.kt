@@ -3,6 +3,7 @@ package com.halilibo.eczane.ui.main.locationlist
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
@@ -15,7 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.halilibo.eczane.ui.common.statefulViewModel
 import com.halilibo.shared.model.City
-import dev.chrisbanes.accompanist.insets.AmbientWindowInsets
+import dev.chrisbanes.accompanist.insets.LocalWindowInsets
 import dev.chrisbanes.accompanist.insets.toPaddingValues
 
 @Composable
@@ -29,16 +30,15 @@ fun LocationListPage(
 
     LazyColumn(
         modifier = modifier,
-        contentPadding = AmbientWindowInsets.current.navigationBars.toPaddingValues()
+        contentPadding = LocalWindowInsets.current.navigationBars.toPaddingValues()
     ) {
         item {
             Row {
                 IconButton(onClick = { onNavigateBack() }) {
                     Icon(
-                        Icons.Default.KeyboardArrowLeft.copy(
-                            defaultWidth = 48.dp,
-                            defaultHeight = 48.dp
-                        ),
+                        Icons.Default.KeyboardArrowLeft,
+                        modifier = Modifier.size(48.dp),
+                        contentDescription = null
                     )
                 }
             }

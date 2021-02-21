@@ -32,7 +32,12 @@ fun distance(
 fun Double.toRadians() = this / 180.0 * PI
 
 fun getLocationBlock(lat: Double, lng: Double): Long {
-    return "${(lat*2).roundToInt()}${(lng).roundToInt()}".toLong()
+    return if (lat > 0f && lng > 0f) {
+        "${(lat * 2).roundToInt()}${(lng).roundToInt()}".toLong()
+    }
+    else {
+        0L
+    }
 }
 
 val Coordinates.locationBlock: Long

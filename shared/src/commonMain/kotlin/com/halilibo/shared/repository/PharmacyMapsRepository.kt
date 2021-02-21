@@ -12,12 +12,10 @@ import com.halilibo.shared.model.Pharmacy
 import com.halilibo.shared.remote.PharmacyApi
 import com.squareup.sqldelight.runtime.coroutines.asFlow
 import com.squareup.sqldelight.runtime.coroutines.mapToList
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
@@ -30,18 +28,15 @@ class PharmacyMapsRepository() : KoinComponent {
     private val onCallPharmacyDatabase: OnCallPharmacyDatabase by inject()
     private val onCallPharmacyQueries = onCallPharmacyDatabase.onCallPharmacyQueries
 
-    private val mapProjectionSource = MutableSharedFlow<LocationBounds>(
-        replay = 0,
-        extraBufferCapacity = 1,
-        BufferOverflow.DROP_OLDEST
-    )
+    private val mapProjectChannel = Channel<LocationBounds>(capacity = 1)
 
     fun updateMapBounds(bounds: LocationBounds) {
-        mapProjectionSource.tryEmit(bounds)
+        coroutineScope.launch { mapProjectChannel.send(bounds) }
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    val pharmaciesFlow: CommonFlow<List<Pharmacy>> = mapProjectionSource
+    val pharmaciesFlow: CommonFlow<List<Pharmacy>> = mapProjectChannel
+        .consumeAsFlow()
         .map { bounds ->
             setOf(
                 bounds.northEast,
@@ -74,7 +69,7 @@ class PharmacyMapsRepository() : KoinComponent {
 
                     logger.d { "Fetching from API for block ${location.locationBlock}" }
 
-                    coroutineScope.launch {
+                    coroutineScope.launch(Dispatchers.Default) {
                         val locationPharmacyListResponse = pharmacyApi
                             .fetchPharmaciesByLocation(
                                 lat = location.latitude,

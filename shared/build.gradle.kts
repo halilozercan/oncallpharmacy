@@ -84,7 +84,6 @@ kotlin {
             dependencies {
                 implementation(Ktor.clientAndroid)
                 implementation(SqlDelight.androidDriver)
-                implementation("com.google.android.material:material:1.2.1")
             }
         }
         val androidTest by getting {

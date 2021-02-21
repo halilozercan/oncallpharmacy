@@ -1,11 +1,11 @@
 package com.halilibo.eczane
 
 import android.os.Bundle
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.setContent
 import androidx.core.view.WindowCompat
 import com.halilibo.eczane.ui.common.OnCallPharmacyTheme
 import com.halilibo.eczane.ui.main.home.HomePage

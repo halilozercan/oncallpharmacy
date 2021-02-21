@@ -124,12 +124,6 @@ class HomeViewModel(
         }
     }
 
-    fun clearPharmacyList() {
-        setState {
-            it.copy(pharmacyList = emptyList(), selectedPharmacy = null)
-        }
-    }
-
 }
 
 enum class PermissionGrantStatus {
